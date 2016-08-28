@@ -14,8 +14,6 @@ public class Address {
     															+ "in the respectively format serpated by ','";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
     public static final String ADDRESS_SPLITER = ",";
-    public static final String BLOCK_VALIDATION_REGEX = "\\d+";
-    public static final String STREET_VALIDATION_REGEX = ".+";
     public static final String UNITNO_VALIDATION_REGEX = "#[0-9]*-[0-9]*";
     public static final String POSTALCODE_VALIDATION_REGEX = "\\d+";
     public static final int BLOCK = 0;
@@ -69,28 +67,14 @@ public class Address {
     	} 
     	else{
     		Block addressBlock = new Block(splitAddress[BLOCK]);
-    		String addressStreet = splitAddress[STREET];
+    		Street addressStreet = new Street(splitAddress[STREET]);
     		String addressUnitNo = splitAddress[UNITNO];
     		String addressPostalCode = splitAddress[POSTALCODE];
     		return addressBlock.isValidBlock() &&
-    				isValidStreet(addressStreet) &&
+    				addressStreet.isValidStreet() &&
     				isValidUnitNo(addressUnitNo) &&
     				isValidPostalCode(addressPostalCode);
     	}
-    }
-    
-//    /**
-//     * Returns true if a given string is a valid block.
-//     */
-//    public static boolean isValidBlock(Block block){
-//    	return block.getBlock().matches(BLOCK_VALIDATION_REGEX);
-//    }
-    
-    /**
-     * Returns true if a given string is a valid street.
-     */
-    public static boolean isValidStreet(String street){
-    	return street.matches(STREET_VALIDATION_REGEX);
     }
     
     /**

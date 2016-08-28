@@ -1,19 +1,28 @@
 package seedu.addressbook.data.person;
 
+import seedu.addressbook.data.exception.IllegalValueException;
+
+/**
+ * Represents a Person's address block in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidBlock(String)}
+ */
+
 public class Block {
+	
 	private String _block;
 	public static final String BLOCK_VALIDATION_REGEX = "\\d+";
 	
-	public Block(String block){
+    /**
+     * Validates given block.
+     *
+     * @throws IllegalValueException if given address block is invalid.
+     */
+	public Block(String block) {
 		this._block = block;
 	}
 	
 	public String getBlock(){
 		return this._block;
-	}
-	
-	public void updateBlock(String block){
-		this._block = block;
 	}
 	
 	/**
