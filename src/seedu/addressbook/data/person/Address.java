@@ -8,11 +8,24 @@ import seedu.addressbook.data.exception.IllegalValueException;
  */
 public class Address {
 
-    public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
+    public static final String EXAMPLE = "a/123, Clementi Ave 3, #12-34, 231534";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses should have block, "
+    															+ "street, unitno, postal code "
+    															+ "in the respectively format serpated by ','";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
+    public static final String ADDRESS_SPLITER = ",";
+    public static final String BLOCK_VALIDATION_REGEX = "\\d+";
+    public static final String STREET_VALIDATION_REGEX = ".+";
+    public static final String UNITNO_VALIDATION_REGEX = "#[0-9]*-[0-9]*";
+    public static final String POSTALCODE_VALIDATION_REGEX = "\\d+";
+    public static final int BLOCK = 0;
+    public static final int STREET = 1;
+    public static final int UNITNO = 2;
+    public static final int POSTALCODE = 3;
+    public static final String COMMASPACE = ", ";
 
     public final String value;
+    private String[] addressInArray;
     private boolean isPrivate;
 
     /**
@@ -25,19 +38,81 @@ public class Address {
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = address;
+        this.addressInArray = addressSpliter(address);
+        this.value = this.toString();
+    }
+    
+    /**
+     * Remove white space among the string 
+     * 
+     */
+    
+    public static void removeWhiteSpace(String [] address){
+    	for(int i = 0; i < address.length; i ++){
+    		address[i] = address[i].trim();
+    	}
+    }
+    
+    public static String[] addressSpliter(String address){
+    	String [] splitAddress = address.split(ADDRESS_SPLITER);
+    	removeWhiteSpace(splitAddress);
+    	return splitAddress;
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person address.
      */
-    public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+    public static boolean isValidAddress(String test){
+    	String [] splitAddress = addressSpliter(test);
+    	if(splitAddress.length != 4){
+    		return false;
+    	} 
+    	else{
+    		String addressBlock = splitAddress[BLOCK];
+    		String addressStreet = splitAddress[STREET];
+    		String addressUnitNo = splitAddress[UNITNO];
+    		String addressPostalCode = splitAddress[POSTALCODE];
+    		return isValidBlock(addressBlock) &&
+    				isValidStreet(addressStreet) &&
+    				isValidUnitNo(addressUnitNo) &&
+    				isValidPostalCode(addressPostalCode);
+    	}
+    }
+    
+    /**
+     * Returns true if a given string is a valid block.
+     */
+    public static boolean isValidBlock(String block){
+    	return block.matches(BLOCK_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Returns true if a given string is a valid street.
+     */
+    public static boolean isValidStreet(String street){
+    	return street.matches(STREET_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Returns true if a given string is a valid unitNo.
+     */
+    public static boolean isValidUnitNo(String unitNo){
+    	return unitNo.matches(UNITNO_VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if a given string is a valid postal code.
+     */
+    public static boolean isValidPostalCode(String postalCode){
+    	return postalCode.matches(POSTALCODE_VALIDATION_REGEX);
+    }
+    
     @Override
     public String toString() {
-        return value;
+    	return addressInArray[BLOCK] + COMMASPACE 
+    			+ addressInArray[STREET] + COMMASPACE 
+    			+ addressInArray[UNITNO] + COMMASPACE 
+    			+ addressInArray[POSTALCODE];
     }
 
     @Override
