@@ -14,7 +14,6 @@ public class Address {
     															+ "in the respectively format serpated by ','";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
     public static final String ADDRESS_SPLITER = ",";
-    public static final String UNITNO_VALIDATION_REGEX = "#[0-9]*-[0-9]*";
     public static final String POSTALCODE_VALIDATION_REGEX = "\\d+";
     public static final int BLOCK = 0;
     public static final int STREET = 1;
@@ -23,7 +22,10 @@ public class Address {
     public static final String COMMASPACE = ", ";
 
     public final String value;
-    private String[] addressInArray;
+    private Block addressBlock;
+    private Street addressStreet;
+    private UnitNo addressUnitNo;
+    private PostalCode addressPostalCode;
     private boolean isPrivate;
 
     /**
@@ -36,7 +38,10 @@ public class Address {
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.addressInArray = addressSpliter(address);
+        this.addressBlock = new Block((addressSpliter(address))[BLOCK]);
+        this.addressStreet = new Street((addressSpliter(address))[STREET]);
+        this.addressUnitNo = new UnitNo((addressSpliter(address))[UNITNO]);
+        this.addressPostalCode = new PostalCode((addressSpliter(address))[POSTALCODE]);
         this.value = this.toString();
     }
     
@@ -68,20 +73,13 @@ public class Address {
     	else{
     		Block addressBlock = new Block(splitAddress[BLOCK]);
     		Street addressStreet = new Street(splitAddress[STREET]);
-    		String addressUnitNo = splitAddress[UNITNO];
+    		UnitNo addressUnitNo = new UnitNo(splitAddress[UNITNO]);
     		String addressPostalCode = splitAddress[POSTALCODE];
     		return addressBlock.isValidBlock() &&
     				addressStreet.isValidStreet() &&
-    				isValidUnitNo(addressUnitNo) &&
+    				addressUnitNo.isValidUnitNo() &&
     				isValidPostalCode(addressPostalCode);
     	}
-    }
-    
-    /**
-     * Returns true if a given string is a valid unitNo.
-     */
-    public static boolean isValidUnitNo(String unitNo){
-    	return unitNo.matches(UNITNO_VALIDATION_REGEX);
     }
 
     /**
@@ -93,10 +91,10 @@ public class Address {
     
     @Override
     public String toString() {
-    	return addressInArray[BLOCK] + COMMASPACE 
-    			+ addressInArray[STREET] + COMMASPACE 
-    			+ addressInArray[UNITNO] + COMMASPACE 
-    			+ addressInArray[POSTALCODE];
+    	return addressBlock.toString() + COMMASPACE 
+    			+ addressStreet.toString() + COMMASPACE 
+    			+ addressUnitNo.toString() + COMMASPACE 
+    			+ addressPostalCode.toString();
     }
 
     @Override
