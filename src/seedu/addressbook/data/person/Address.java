@@ -68,23 +68,23 @@ public class Address {
     		return false;
     	} 
     	else{
-    		String addressBlock = splitAddress[BLOCK];
+    		Block addressBlock = new Block(splitAddress[BLOCK]);
     		String addressStreet = splitAddress[STREET];
     		String addressUnitNo = splitAddress[UNITNO];
     		String addressPostalCode = splitAddress[POSTALCODE];
-    		return isValidBlock(addressBlock) &&
+    		return addressBlock.isValidBlock() &&
     				isValidStreet(addressStreet) &&
     				isValidUnitNo(addressUnitNo) &&
     				isValidPostalCode(addressPostalCode);
     	}
     }
     
-    /**
-     * Returns true if a given string is a valid block.
-     */
-    public static boolean isValidBlock(String block){
-    	return block.matches(BLOCK_VALIDATION_REGEX);
-    }
+//    /**
+//     * Returns true if a given string is a valid block.
+//     */
+//    public static boolean isValidBlock(Block block){
+//    	return block.getBlock().matches(BLOCK_VALIDATION_REGEX);
+//    }
     
     /**
      * Returns true if a given string is a valid street.
