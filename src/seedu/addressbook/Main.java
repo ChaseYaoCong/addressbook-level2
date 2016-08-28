@@ -1,5 +1,8 @@
 package seedu.addressbook;
 
+//T3A1 Setting up Repo and Clone
+//Run test.sh to ensure it is working properly.
+
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.storage.StorageFile.*;
 
