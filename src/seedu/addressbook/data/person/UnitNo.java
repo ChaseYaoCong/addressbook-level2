@@ -3,7 +3,7 @@ package seedu.addressbook.data.person;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
- * Represents a Person's address street in the unit no book.
+ * Represents a Person's address unit no in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidUnitNo()}
  */
 
