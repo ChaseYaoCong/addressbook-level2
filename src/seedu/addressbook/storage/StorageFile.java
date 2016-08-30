@@ -96,7 +96,9 @@ public class StorageFile {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(toSave, fileWriter);
 
-        } catch (IOException ioe) {
+        } catch (FileNotFoundException fnfe) {
+        	throw new StorageOperationException("File not found at " + path);
+    	} catch (IOException ioe) {
             throw new StorageOperationException("Error writing to file: " + path);
         } catch (JAXBException jaxbe) {
             throw new StorageOperationException("Error converting address book into storage format");
