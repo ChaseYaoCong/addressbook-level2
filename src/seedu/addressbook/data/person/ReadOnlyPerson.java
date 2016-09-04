@@ -20,6 +20,8 @@ public interface ReadOnlyPerson {
      */
     UniqueTagList getTags();
 
+    int	getSequenceNo();
+    
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
      */
