@@ -75,7 +75,7 @@ public class Name {
     		
     		return currNameSplitIntoList.containsAll(otherNameSplitIntoList) ||
     				otherNameSplitIntoList.containsAll(currNameSplitIntoList);
-    	}
+    		}
     }
 
 }
