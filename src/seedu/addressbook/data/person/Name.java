@@ -60,5 +60,22 @@ public class Name {
     public int hashCode() {
         return fullName.hashCode();
     }
+    /*
+     * Return true if the current name contains the other name or vice versa
+     * */
+    
+    public boolean isSimiliar(Name otherPerson){
+    	if(otherPerson == null){
+    		return false;
+    	} else{
+    		final List<String> currNameSplitIntoList = Arrays.asList(
+    				fullName.toLowerCase().split(" "));
+    		final List<String> otherNameSplitIntoList = Arrays.asList(
+    				otherPerson.fullName.toLowerCase().split(" "));
+    		
+    		return currNameSplitIntoList.containsAll(otherNameSplitIntoList) ||
+    				otherNameSplitIntoList.containsAll(currNameSplitIntoList);
+    	}
+    }
 
 }
