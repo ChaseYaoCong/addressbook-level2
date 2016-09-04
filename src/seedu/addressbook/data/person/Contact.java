@@ -2,6 +2,8 @@ package seedu.addressbook.data.person;
 
 public class Contact {
 
+	private boolean isPrivate;
+	private String value;
 	/**
      * Returns true if a given string matches the given regex
      */
@@ -9,15 +11,26 @@ public class Contact {
         return test.matches(regex);
     }
 
-    public String toString(String value) {
+    @Override
+    public String toString() {
         return value;
     }
-
-    public int hashCode(String value) {
+    
+    @Override
+    public int hashCode() {
         return value.hashCode();
     }
 
-    public boolean isPrivate(boolean isPrivate) {
+    public boolean isPrivate() {
         return isPrivate;
     }
+    
+    public void setPrivate(boolean privateValue){
+    	this.isPrivate = privateValue;
+    }
+    
+    public void setValue(String newValue){
+    	this.value = newValue;
+    }
 }
+

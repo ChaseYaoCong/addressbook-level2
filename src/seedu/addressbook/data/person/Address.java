@@ -13,7 +13,6 @@ public class Address extends Contact {
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
     public final String value;
-    private boolean isPrivate;
 
     /**
      * Validates given address.
@@ -21,23 +20,12 @@ public class Address extends Contact {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
-        this.isPrivate = isPrivate;
-        if (!isValidAddress(address)) {
+        super.setPrivate(isPrivate);
+        if (!checkValidity(address, ADDRESS_VALIDATION_REGEX)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = address;
-    }
-
-    /**
-     * Returns true if a given string is a valid person email.
-     */
-    public boolean isValidAddress(String test) {
-        return super.checkValidity(test, ADDRESS_VALIDATION_REGEX);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString(this.value);
+        super.setValue(this.value);
     }
 
     @Override
@@ -47,12 +35,4 @@ public class Address extends Contact {
                 && this.value.equals(((Address) other).value)); // state check
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode(value);
-    }
-
-    public boolean isPrivate() {
-        return super.isPrivate(isPrivate);
-    }
 }
