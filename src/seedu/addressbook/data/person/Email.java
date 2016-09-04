@@ -14,7 +14,6 @@ public class Email extends Contact{
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
     public final String value;
-    private boolean isPrivate;
 
     /**
      * Validates given email.

@@ -13,7 +13,6 @@ public class Phone extends Contact {
     public static final String PHONE_VALIDATION_REGEX = "\\d+";
 
     public final String value;
-    private boolean isPrivate;
 
     /**
      * Validates given phone number.
