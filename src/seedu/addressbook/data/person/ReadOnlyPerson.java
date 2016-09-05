@@ -37,24 +37,23 @@ public interface ReadOnlyPerson {
      */
     default String getAsTextShowAll() {
         final StringBuilder builder = new StringBuilder();
-        final String detailIsPrivate = "(private) ";
-        builder.append(getName())
-                .append(" Phone: ");
+        builder.append(getPrintableString(getName()));
         if (getPhone().isPrivate()) {
-            builder.append(detailIsPrivate);
+            builder.append(getPrivatePrintableString(getPhone()));
+        } else{
+        	builder.append(getPrintableString(getPhone()));
         }
-        builder.append(getPhone())
-                .append(" Email: ");
         if (getEmail().isPrivate()) {
-            builder.append(detailIsPrivate);
+            builder.append(getPrivatePrintableString(getEmail()));
+        } else{
+        	builder.append(getPrintableString(getEmail()));
         }
-        builder.append(getEmail())
-                .append(" Address: ");
         if (getAddress().isPrivate()) {
-            builder.append(detailIsPrivate);
+            builder.append(getPrivatePrintableString(getAddress()));
+        } else{
+        	builder.append(getPrintableString(getAddress()));
         }
-        builder.append(getAddress())
-                .append(" Tags: ");
+        builder.append(" Tags: ");
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
@@ -66,20 +65,33 @@ public interface ReadOnlyPerson {
      */
     default String getAsTextHidePrivate() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName());
-        if (!getPhone().isPrivate()) {
-            builder.append(" Phone: ").append(getPhone());
-        }
-        if (!getEmail().isPrivate()) {
-            builder.append(" Email: ").append(getEmail());
-        }
-        if (!getAddress().isPrivate()) {
-            builder.append(" Address: ").append(getAddress());
-        }
+        builder.append(getPrintableString(getName(), getPhone(), getEmail(), getAddress()));
         builder.append(" Tags: ");
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
         return builder.toString();
+    }
+    
+    /**
+     * Return the content and format of getPrintableString   
+     */
+    default String getPrintableString(Printable...printables){
+    	final StringBuilder builder = new StringBuilder();
+    	for(int i = 0; i < printables.length; i ++){
+    		builder.append(printables[i].getPrintableString());
+    	}
+    	return builder.toString();
+    }
+    
+    /**
+     * Return the private content and format of getPrintableString   
+     */
+    default String getPrivatePrintableString(Printable...printables){
+    	final StringBuilder builder = new StringBuilder();
+    	for(int i = 0; i < printables.length; i ++){
+    		builder.append(printables[i].getPrivatePrintableString());
+    	}
+    	return builder.toString();
     }
 }
